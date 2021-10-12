@@ -9,6 +9,7 @@ python = "^3.9"
 flake8 = "^4.0.1"
 alembic = "^1.7.4"
 SQLAlchemy = "^1.4.25"
+mypy = "^0.910"
 
 [tool.poetry.dev-dependencies]
 

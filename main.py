@@ -5,7 +5,7 @@ def greeting(name: str) -> str:
     return f'Hello {name}'
 
 
-def main():
+def main() -> None:
     print(
         math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi)
     print(greeting("Ilay"))

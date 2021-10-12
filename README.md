@@ -376,6 +376,116 @@ This repo should turn into the base structure of my python projects in order to 
     * Anonymously named constraints.
     * [Special SQLAlchemy types such as Enum](https://stackoverflow.com/questions/47206201/how-to-use-enum-with-sqlalchemy-and-alembic)
       when generated on a backend which doesn't support ENUM directly.
-      
-14. [Controlling what to be auto-generated](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#comparing-and-rendering-types) | [Comparing and rendering types](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#comparing-and-rendering-types) | [Applying post-processing and python code formatters to generated](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#applying-post-processing-and-python-code-formatters-to-generated-revisions)
 
+14. [Controlling what to be auto-generated](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#comparing-and-rendering-types)
+    | [Comparing and rendering types](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#comparing-and-rendering-types)
+    | [Applying post-processing and python code formatters to generated](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#applying-post-processing-and-python-code-formatters-to-generated-revisions)
+
+---
+
+### [mypy](https://mypy.readthedocs.io/en/stable/getting_started.html)
+
+> static type checker for Python 3 and Python 2.7. If you sprinkle your code with type annotations, mypy can type check your code and find common bugs.
+
+#### Usage
+
+1. install mypy **inside your virtual environment** -
+   ```shell
+   pip install mypy
+   ```
+
+2. function signatures -
+
+   By default, mypy will not type check dynamically typed functions. This means that with a few exceptions, mypy will
+   not report any errors with regular unannotated Python.
+
+    ```python
+    def greeting(name):
+        return 'Hello ' + name
+   
+    greeting(3)  # will not report
+   
+    def typed_greeting(name: str) -> str:
+        return 'Hello ' + name
+   
+    typed_greeting(3)  # will report
+    ```
+
+3. when writing typed python and using mypy a lot of small bugs can be prevented. mypy **supports
+   python `typing` `collections.abc`** modules - use them.
+
+
+4. **built-in & third-party libraries** - Mypy uses library stubs to type check code interacting with library modules,
+   including the Python standard library.
+
+
+5. configuring mypy - [available command line](https://mypy.readthedocs.io/en/stable/command_line.html#command-line)
+
+   flags like `--disallow-untyped-defs` `--strict`
+   > useful if you’re starting a new project from scratch and want to maintain a high degree of type safety from day one. However, this flag will probably be too aggressive if you either plan on using many untyped third party libraries or are trying to add static types to a large, existing codebase.
+
+
+6. [mypy cheatsheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html#cheat-sheet-py3)
+   | [using mypy with existing codebase](https://mypy.readthedocs.io/en/stable/existing_code.html#existing-code)
+
+
+7. practical quick usage
+
+    ```shell
+    $ mypy file_1.py foo/file_2.py file_3.pyi some/directory
+    ```
+
+    ```shell
+    $ mypy -m html.parser  # module checker
+    ```
+
+    ```shell
+    $ mypy -p html  # package checker
+    ```
+
+    ```shell
+    $ mypy --package p.a --package p.b --module c
+    ```
+
+    ```shell
+    $ mypy -c 'x = [1, 2]; print(x())'
+    ```
+
+    ```shell
+    $ mypy --install-types  # if library stubs not installed
+    ```
+
+   mypy configuration file - by default it uses the file `mypy.ini`
+
+    ```ini
+   # if library doesnt support types and we couldn't find her typed version / rewrite it
+   [mypy-library.*]
+   ignore_missing_imports = True
+   # for every missing type report the best practice is to skip less.
+   # import library  # type: ignore
+   # [mypy-library.*]
+   # [mypy]
+    ```
+
+   example
+
+    ```ini
+   # Global options:
+   [mypy]
+   python_version = 2.7
+   warn_return_any = True
+   warn_unused_configs = True
+   
+   # Per-module options:
+   
+   [mypy-mycode.foo.*]
+   disallow_untyped_defs = True
+   
+   [mypy-mycode.bar]
+   warn_return_any = False
+   
+   [mypy-somelibrary]
+   ignore_missing_imports = True
+    ```
+   
+    check usefull info [here](https://mypy.readthedocs.io/en/stable/config_file.html#disallow-dynamic-typing)
