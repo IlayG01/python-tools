@@ -6,8 +6,7 @@ def greeting(name: str) -> str:
 
 
 def main() -> None:
-    print(
-        math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi)
+    print(math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi)
     print(greeting("Ilay"))
 
 

@@ -8,6 +8,61 @@ This repo should turn into the base structure of my python projects in order to 
 
 ## Tools
 
+### [Pre Commit](https://pre-commit.com/)
+
+> A framework for managing and maintaining multi-language pre-commit hooks.
+
+#### Usage
+
+1. Install
+
+    ```shell
+   pip install pre-commit  # add to requirement.txt later
+   poetry add pre-commit
+    ```
+
+2. Check install
+
+    ```shell
+   pre-commit --version
+    ```
+
+3. Add pre-commit configuration file - `.pre-commit-config.yaml`
+
+    ```shell
+   $ pre-commit sample-config
+   #.pre-commit-config.yaml file content
+       repos:
+    -   repo: https://github.com/pre-commit/pre-commit-hooks
+        rev: v2.3.0
+        hooks:
+        -   id: check-yaml
+        -   id: end-of-file-fixer
+        -   id: trailing-whitespace
+    -   repo: https://github.com/psf/black
+        rev: 19.3b0
+        hooks:
+        -   id: black
+    ```
+
+4. Install the git hook scripts
+
+    ```shell
+   $ pre-commit install
+   pre-commit installed at .git/hooks/pre-commit
+    ```
+
+5. Run against all files
+
+   it's usually a good idea to run the hooks against all of the files when adding new hooks (usually `pre-commit` will
+   only run on the changed files during git hooks)
+
+    ```shell
+   $ pre-commit run --all-files
+    ```
+
+[full configuration detail](https://pre-commit.com/#plugins) | [supported hooks](https://pre-commit.com/hooks.html)
+
 ### [Poetry](https://python-poetry.org/docs/basic-usage/)
 
 > Poetry is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on, and it will manage (install/update) them for you.
@@ -139,21 +194,21 @@ This repo should turn into the base structure of my python projects in order to 
          └── versions/               # this directory holds the individual version scripts
              ├── 3512b954651e_add_account.py
              ├── 2b1ae634e5cd_add_order_id.py
-             └── 3adcc9a56557_rename_username_field.py                
+             └── 3adcc9a56557_rename_username_field.py
    ```
 
 4. alembic available templates
    ```shell
    alembic list_templates
    Available templates:
-   
+
    generic - Generic single-database configuration.
    async - Generic single-database configuration with an async dbapi.
    multidb - Rudimentary multi-database configuration.
    pylons - Configuration that reads from a Pylons project environment.
-   
+
    Templates are used via the 'init' command, e.g.:
-   
+
      alembic init --template pylons ./scripts
    ```
 
@@ -192,23 +247,23 @@ This repo should turn into the base structure of my python projects in order to 
    ```python
    """
    create account table
-   
+
    Revision ID: 1975ea83b712
    Revises:
    Create Date: 2020-11-08 11:40:27.089406
    """
-   
+
    # revision identifiers, used by Alembic.
    revision = '1975ea83b712'
    down_revision = None
    branch_labels = None
-   
+
    from alembic import op
    import sqlalchemy as sa
-   
+
    def upgrade():
        pass
-   
+
    def downgrade():
        pass
    ```
@@ -243,7 +298,7 @@ This repo should turn into the base structure of my python projects in order to 
         sa.Column('name', sa.String(50), nullable=False),
         sa.Column('description', sa.Unicode(200)),
        )
-   
+
    def downgrade():
        op.drop_table('account')
    ```
@@ -279,22 +334,22 @@ This repo should turn into the base structure of my python projects in order to 
    ```python
    """
    Add a column
-   
+
    Revision ID: ae1027a6acf
    Revises: 1975ea83b712
    Create Date: 2011-11-08 12:37:36.714947
    """
-   
+
    # revision identifiers, used by Alembic.
    revision = 'ae1027a6acf'
    down_revision = '1975ea83b712'
-   
+
    from alembic import op
    import sqlalchemy as sa
-   
+
    def upgrade():
        op.add_column('account', sa.Column('last_transaction_date', sa.DateTime))
-   
+
    def downgrade():
        op.drop_column('account', 'last_transaction_date')
    ```
@@ -402,12 +457,12 @@ This repo should turn into the base structure of my python projects in order to 
     ```python
     def greeting(name):
         return 'Hello ' + name
-   
+
     greeting(3)  # will not report
-   
+
     def typed_greeting(name: str) -> str:
         return 'Hello ' + name
-   
+
     typed_greeting(3)  # will report
     ```
 
@@ -475,17 +530,18 @@ This repo should turn into the base structure of my python projects in order to 
    python_version = 2.7
    warn_return_any = True
    warn_unused_configs = True
-   
+
    # Per-module options:
-   
+
    [mypy-mycode.foo.*]
    disallow_untyped_defs = True
-   
+
    [mypy-mycode.bar]
    warn_return_any = False
-   
+
    [mypy-somelibrary]
    ignore_missing_imports = True
     ```
-   
-    check usefull info [here](https://mypy.readthedocs.io/en/stable/config_file.html#disallow-dynamic-typing)
+
+   check usefull info [here](https://mypy.readthedocs.io/en/stable/config_file.html#disallow-dynamic-typing)
+---
