@@ -1,8 +1,14 @@
 import math
 
 
+def greeting(name: str) -> str:
+    return f'Hello {name}'
+
+
 def main():
-    print(math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi)
+    print(
+        math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi + math.pi)
+    print(greeting("Ilay"))
 
 
 if __name__ == '__main__':
