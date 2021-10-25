@@ -545,3 +545,76 @@ This repo should turn into the base structure of my python projects in order to 
 
    check usefull info [here](https://mypy.readthedocs.io/en/stable/config_file.html#disallow-dynamic-typing)
 ---
+
+### [Bandit](https://github.com/PyCQA/bandit)
+
+> Bandit is a tool designed to find common security issues in Python code.
+
+#### Usage -
+
+1. Install (inside your virtual environment)
+```shell
+poetry add bandit || pip install bandit
+```
+
+2. Run bandit
+```shell
+bandit -r project
+```
+
+3. Useful flags -
+```shell
+bandit project/ -lll -x project/mymodule1/tests/
+```
+
+4. Configuration file - can be done in pyproject.toml
+
+`bandit project/ -c project/pyproject.toml`
+```ini
+[tool.bandit]
+tests = ["B201", "B301"]
+skips = ["B101", "B601"]
+
+[tool.bandit.any_other_function_with_shell_equals_true]
+no_shell = [
+  "os.execl",
+  "os.execle",
+  "os.execlp",
+  "os.execlpe",
+  "os.execv",
+  "os.execve",
+  "os.execvp",
+  "os.execvpe",
+  "os.spawnl",
+  "os.spawnle",
+  "os.spawnlp",
+  "os.spawnlpe",
+  "os.spawnv",
+  "os.spawnve",
+  "os.spawnvp",
+  "os.spawnvpe",
+  "os.startfile"
+]
+shell = [
+  "os.system",
+  "os.popen",
+  "os.popen2",
+  "os.popen3",
+  "os.popen4",
+  "popen2.popen2",
+  "popen2.popen3",
+  "popen2.popen4",
+  "popen2.Popen3",
+  "popen2.Popen4",
+  "commands.getoutput",
+  "commands.getstatusoutput"
+]
+subprocess = [
+  "subprocess.Popen",
+  "subprocess.call",
+  "subprocess.check_call",
+  "subprocess.check_output"
+]
+```
+
+5. [Tests List](https://bandit.readthedocs.io/en/latest/plugins/index.html)
