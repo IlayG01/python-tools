@@ -2,7 +2,7 @@
 name = "python-tools"
 version = "0.1.0"
 description = "Integrating Different Python Tools"
-authors = ["ilay.gilman <ilay.gilman@agamin.co.il>"]
+authors = ["ilay.gilman <ilay.gilman@domain.co.il>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
